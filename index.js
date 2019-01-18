@@ -15,19 +15,19 @@ const db = knex(knexConfig.development);
 //sanity check
 console.log('index.js running');
 dbAccess
-	.getDishes()
+	.getRecipes()
 	.then(dishes => console.log(dishes))
 	.catch();
-// //dbAccess
-// 	.addDish({
-// 		name: 'Fish'
+// dbAccess
+// 	.addRecipe({
+// 		name: 'Raw Steak', instructions: "Eat it raw", dish_id : 2
 // 	})
 // 	.then(dishes => console.log(dishes))
 // 	.catch();
-// dbAccess
-// 	.getDishes()
-// 	.then(dishes => console.log(dishes))
-// 	.catch();
+dbAccess
+	.getDishes()
+	.then(dishes => console.log(dishes))
+	.catch();
 
 //endpoint sanity check
 server.get('/', (req, res) => {
