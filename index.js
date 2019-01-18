@@ -14,10 +14,10 @@ const db = knex(knexConfig.development);
 
 //sanity check
 console.log('index.js running');
-dbAccess
-	.getRecipes()
-	.then(dishes => console.log(dishes))
-	.catch();
+// dbAccess
+// 	.getRecipes()
+// 	.then(dishes => console.log(dishes))
+// 	.catch();
 // dbAccess
 // 	.addRecipe({
 // 		name: 'Raw Steak', instructions: "Eat it raw", dish_id : 2
@@ -25,7 +25,7 @@ dbAccess
 // 	.then(dishes => console.log(dishes))
 // 	.catch();
 dbAccess
-	.getDishes()
+	.getRecipe(3)
 	.then(dishes => console.log(dishes))
 	.catch();
 

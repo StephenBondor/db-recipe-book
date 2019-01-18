@@ -34,6 +34,40 @@ module.exports = {
 	},
 	//should add a recipe to the database and return the id of the new recipe.
 	addRecipe: recipe => {
-		return db('recipies').insert(recipe);;
+		return db('recipies').insert(recipe);
+	},
+
+	//return an individual recipe with a list of the Name of the dish, name of the recipe, name of the indredients, and quantity
+	getRecipe: id => {
+		const recipie = db('recipies')
+			.where({id})
+			.first();
+
+		const dish = db('dishes')
+			.join('recipies', 'recipies.dish_id', '=', 'dishes.id')
+			.select('dishes.name as dishName')
+			.where({'recipies.id': id})
+			.first();
+
+		const ingredients = db('recipyIngredients')
+			.join('recipies', 'recipies.id', '=', 'recipyIngredients.recipe_id')
+			.join(
+				'ingredients',
+				'ingredients.id',
+				'=',
+				'recipyIngredients.ingredient_id'
+			)
+			.select('ingredients.name', 'recipyIngredients.amount')
+			.where({'recipies.id': id});
+
+		return Promise.all([recipie, dish, ingredients]).then(results => {
+			const [recipie, dish, ingredients] = results;
+			return {
+				dishName: dish.dishName,
+				recipe: recipie.name,
+				instructions: recipie.instructions,
+				ingredients: ingredients
+			}; 
+		});
 	}
 };
